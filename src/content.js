@@ -61,13 +61,34 @@ export const MODULES = [
       {
         title: "Money Is a Tool, Not a Goal",
         videoUrl: "",
-        content: `Here's something nobody tells you: money isn't the point. Money is a tool — like a hammer or a phone. It's only as useful as what you do with it.
+        content: `The Edura Guide: The Mechanics of Money
+The fundamental premise of financial literacy is understanding that money functions strictly as a tool. Much like a hammer or a smartphone, its value depends entirely on how you use it. While some people spend their careers earning money without ever achieving true financial security, others use modest incomes to build sustainable wealth.
 
-Some people chase money their whole lives and still feel broke. Others earn modest incomes but build real security. The difference? Understanding how money actually works.
+The distinction lies in a clear understanding of financial mechanics.
 
-This module is going to give you that understanding. No complicated math, no boring lectures — just the stuff you'll actually use when you start earning, spending, and saving for real.
+This module provides that foundational framework. The objective is to break down complex financial concepts into practical, actionable strategies for managing income, expenses, and savings. By mastering these principles, you will develop a level of financial competency that surpasses the average adult.
 
-By the end, you'll know more about money than most adults. That's not an exaggeration.`,
+To build a system that produces consistent results, you must master three core operational concepts: the generation of income, the allocation of funds, and the retention of wealth.
+
+The Reality of Earning
+Entering the workforce requires an immediate understanding of how income works. When negotiating a salary or an hourly wage, you calculate a baseline gross income. However, the initial figure discussed during hiring rarely matches your actual paycheck.
+
+This introduces the critical distinction between gross pay and net pay. Gross pay represents your total negotiated earnings. Net pay is the actual money deposited into your account after mandatory tax withholdings and deductions are applied. A foundational step in personal finance is operating strictly on net income. Developing financial projections or spending strategies based on gross pay inevitably leads to cash flow deficits. Absolute clarity regarding your actual take-home pay is required to build any functional financial system.
+
+Directing the Flow of Capital
+The concept of a budget often carries a negative reputation, frequently viewed as a restrictive financial diet. A more accurate and effective framework is a structured spending plan.
+
+Operating without a proactive strategy allows daily impulses to dictate financial outcomes, often resulting in empty accounts and unnecessary stress before the next pay cycle. A spending plan is simply a mechanism for directing your money before the month begins. Effective financial management requires prioritizing absolute necessities, such as housing, food, and transportation. Once these baselines are secured, discretionary income can be systematically allocated toward personal interests. This structured approach ensures that your money is spent purposefully rather than reactively.
+
+Retention and Future Security
+Spending the entirety of your income creates a highly vulnerable financial position. A single unexpected event, such as a car repair or a temporary reduction in work hours, can immediately force you into debt.
+
+Saving money is fundamentally the practice of purchasing future stability. The immediate objective of saving is the establishment of an emergency reserve, a dedicated pool of cash designed specifically to absorb unexpected costs. Once this baseline security is established, saved capital transitions into a vehicle for opportunity. Whether the objective is acquiring an asset, funding a move, or generating independent cash flow, retained earnings represent autonomy. Every dollar held in reserve is a measure of future freedom.
+
+The Bottom Line
+Achieving financial independence does not require an immediate massive salary. It requires the implementation of a deliberate, structured system. It requires the recognition that every dollar has a specific function, and you act as the director assigning those functions.
+
+The following sections will deconstruct the mechanics of these systems in detail. The text will examine the components of a standard paycheck, introduce efficient methods for tracking cash flow, and outline actionable steps for establishing a financial safety net.`,
       },
       {
         title: "The One Equation That Rules Everything",
