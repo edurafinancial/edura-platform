@@ -103,20 +103,20 @@ Income represents your cash inflow. In the early stages of a career, this is pri
  
 Expenses represent your cash outflow. These are categorized into "fixed expenses" (consistent, predictable costs like rent or a car payment) and "variable expenses" (fluctuating costs like dining out or purchasing clothing). 
  
-The remaining balance—Retained Capital—is the ultimate metric of financial health. It dictates your trajectory. A net-zero balance means you are living paycheck-to-paycheck, entirely dependent on your next cycle of income to survive. A negative balance indicates the accumulation of debt. A positive balance, however, creates financial optionality. Retained capital is the exact resource required to fund investments, acquire assets, and build sustainable wealth. The primary objective of financial management is to systematically maximize this final number.`,
+The remaining balance, Retained Capital, is the ultimate metric of financial health. It dictates your trajectory. A net-zero balance means you are living paycheck-to-paycheck, entirely dependent on your next cycle of income to survive. A negative balance indicates the accumulation of debt. A positive balance, however, creates financial optionality. Retained capital is the exact resource required to fund investments, acquire assets, and build sustainable wealth. The primary objective of financial management is to systematically maximize this final number.`,
       },
       {
         title: "The Two Mechanisms of Financial Improvement",
         videoUrl: "",
         content: `When attempting to widen the gap between income and expenses, individuals can only manipulate two primary mechanisms. 
  
-Mechanism 1: Increase income potential. This is achieved by enhancing your "human capital"—the specific skills, education, and experience you possess. By learning a higher-paying skill, negotiating a wage increase, or establishing a secondary revenue stream, you actively increase your cash inflow. 
+Mechanism 1: Increase income potential. This is achieved by enhancing your "human capital", the specific skills, education, and experience you possess. By learning a higher-paying skill, negotiating a wage increase, or establishing a secondary revenue stream, you actively increase your cash inflow. 
  
 Mechanism 2: Decrease operational expenditures. This requires strategic cost optimization, such as eliminating unused subscriptions, identifying cost-effective alternatives for daily necessities, and actively monitoring cash outflows.
  
 The general public tends to focus exclusively on Mechanism 2, relying on extreme budgeting to achieve financial goals. However, reducing expenses has a mathematical floor; you cannot reduce your survival costs (housing, basic nutrition, transportation) below zero. Conversely, the potential for increasing income has no theoretical ceiling. 
  
-The most effective strategy for wealth accumulation is the simultaneous application of both mechanisms. You must actively seek to maximize your earning potential while defending against "lifestyle creep"—the common phenomenon where a person's expenses organically rise to match their new, higher income.`,
+The most effective strategy for wealth accumulation is the simultaneous application of both mechanisms. You must actively seek to maximize your earning potential while defending against "lifestyle creep" which is the common phenomenon where a person's expenses organically rise to match their new, higher income.`,
       },
       {
         title: "Distinguishing Between Necessities and Discretionary Expenses",
@@ -127,7 +127,7 @@ Necessities are items required to maintain basic functional operations: secure h
  
 The complication arises when necessities and discretionary expenses overlap. For instance, a mobile device is a modern necessity for communication and employment. However, purchasing a $1,200 premium flagship smartphone instead of a functional $200 model transforms a necessity into a discretionary expense. The core utility (communication) is fulfilled by the cheaper device; the additional $1,000 is spent entirely on status and luxury.
  
-Understanding this distinction introduces the concept of "Opportunity Cost"—the potential benefit lost when you choose one alternative over another. The opportunity cost of buying the $1,200 phone is the $1,000 that could have been invested and compounded over time. Financial literacy is not about eliminating all discretionary spending; it is about recognizing opportunity costs and making calculated, intentional capital allocations.`,
+Understanding this distinction introduces the concept of "Opportunity Cost"; the potential benefit lost when you choose one alternative over another. The opportunity cost of buying the $1,200 phone is the $1,000 that could have been invested and compounded over time. Financial literacy is not about eliminating all discretionary spending; it is about recognizing opportunity costs and making calculated, intentional capital allocations.`,
       },
       {
         title: "The 50/30/20 Allocation Framework",
@@ -247,8 +247,8 @@ The primary distinction between individuals who achieve financial independence a
       },
       {
         q: "What is the 'Opportunity Cost' of purchasing a $1,200 luxury smartphone when a $200 functional phone meets your communication needs?",
-        opts: ["The $200 spent on the functional phone.", "The $1,000 difference that could have been invested and compounded over an extended time horizon.", "The cost of the monthly telecommunications subscription.", "The depreciation of the functional phone."],
-        correct: 1,
+        opts: ["The cost of the monthly telecommunications subscription.", "The $1,000 difference that could have been invested and compounded over an extended time horizon.", "The $200 spent on the functional phone.", "The depreciation of the functional phone."],
+        correct: 3,
         why: "Opportunity cost represents the potential benefit lost when choosing one alternative over another. Spending the extra $1,000 on luxury means losing the ability to use that capital for wealth accumulation.",
       },
       {
