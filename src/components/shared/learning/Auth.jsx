@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { saveUser } from "../../../shared/learning/storage";
-import LoginPage from "../../../pages/LoginPage";
-import SignUpPage from "../../../pages/SignUpPage";
+import AuthPage from "../../../pages/AuthPage";
 
 export function Auth({ onLogin }) {
-	const [isSignup, setIsSignup] = useState(false);
+	const [mode, setMode] = useState("login");
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [school, setSchool] = useState("");
@@ -22,7 +21,7 @@ export function Auth({ onLogin }) {
 				: { name, email, school, role };
 		if (!values.email?.trim()) return;
 		const u = {
-			name: isSignup
+			name: mode === "signup"
 				? values.name?.trim() || "Student"
 				: values.email.trim().split("@")[0],
 			email: values.email.trim(),
@@ -33,32 +32,25 @@ export function Auth({ onLogin }) {
 		onLogin(u);
 	};
 
-	if (isSignup) {
-			return (
-				<SignUpPage
-					defaultValues={{ name, email, school, role }}
-					onSubmit={(values) => {
-						setName(values.name);
-						setEmail(values.email);
-					setSchool(values.school);
-					setRole(values.role);
-					submit(values);
-				}}
-				onSwitchMode={() => setIsSignup(false)}
-			/>
-		);
-	}
-
-	return (
-		<LoginPage
-			email={email}
-			password={password}
-			remember={remember}
-			onEmailChange={setEmail}
-			onPasswordChange={setPassword}
-			onRememberChange={setRemember}
-			onSubmit={submit}
-			onSwitchMode={() => setIsSignup(true)}
+		return (
+		<AuthPage
+			mode={mode}
+			onModeChange={setMode}
+			loginValues={{ email, password, remember }}
+			signupDefaultValues={{ name, email, school, role }}
+			onLoginSubmit={(values) => {
+				setEmail(values.email);
+				setPassword(values.password);
+				setRemember(values.remember);
+				submit(values);
+			}}
+			onSignupSubmit={(values) => {
+				setName(values.name);
+				setEmail(values.email);
+				setSchool(values.school);
+				setRole(values.role);
+				submit(values);
+			}}
 		/>
 	);
 }

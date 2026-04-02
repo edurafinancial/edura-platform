@@ -1,8 +1,8 @@
 import { University } from "lucide-react";
 
-export default function SignUpHeroPanel() {
+export default function AuthHeroPanel() {
   return (
-    <section className="relative hidden overflow-hidden bg-surface-container-low p-12 lg:flex lg:min-h-screen lg:flex-col lg:items-center lg:justify-center">
+    <section className="relative hidden overflow-hidden bg-surface-container-low p-12 lg:flex lg:min-h-screen lg:flex-col lg:items-center ">
       <div
         className="pointer-events-none absolute inset-0 opacity-20"
         style={{
@@ -11,7 +11,7 @@ export default function SignUpHeroPanel() {
         }}
       />
 
-      <div className="relative z-10 max-w-md text-center">
+      <div className="relative z-10 max-w-md text-center lg:mt-[10%]">
         <div className="mb-12 flex justify-center">
           <div className="relative flex h-64 w-64 items-center justify-center rounded-full bg-primary-container/10">
             <div className="flex h-[170px] w-[170px] items-center justify-center rounded-full bg-primary/10 text-primary">
@@ -37,7 +37,7 @@ export default function SignUpHeroPanel() {
         </p>
       </div>
 
-      <div className="absolute bottom-12 left-12 flex items-center gap-4 rounded-xl bg-surface-container-lowest p-4 shadow-sm">
+      <div className="absolute bottom-10 left-12 flex items-center gap-4 rounded-xl bg-surface-container-lowest p-4 shadow-sm">
         <div className="font-ui-mono text-surface flex h-10 w-10 items-center justify-center rounded-full bg-primary text-sm text-on-primary">
           98%
         </div>
