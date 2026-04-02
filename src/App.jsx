@@ -1,12 +1,12 @@
 import { Route, Routes } from "react-router";
+import Error404Page from "./pages/Error404Page";
 import LearningPage from "./pages/LearningPage";
-import NotFoundPage from "./pages/NotFoundPage";
 
 export default function App() {
 	return (
 		<Routes>
 			<Route path="/" element={<LearningPage />} />
-			<Route path="*" element={<NotFoundPage />} />
+			<Route path="*" element={<Error404Page />} />
 		</Routes>
 	);
 }
