@@ -28,3 +28,6 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Local workflow docs
+UI_WORKFLOW_INSTRUCTIONS.md
