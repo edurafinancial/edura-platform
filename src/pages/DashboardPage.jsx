@@ -15,21 +15,9 @@ import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import DashboardStatsSection from "@/components/dashboard/DashboardStatsSection";
 import DashboardTrackSection from "@/components/dashboard/DashboardTrackSection";
 
-const Auth = lazy(() =>
-  import("@/components/shared/learning/Auth").then((m) => ({
-    default: m.Auth,
-  }))
-);
-const Lesson = lazy(() =>
-  import("@/components/shared/learning/Lesson").then((m) => ({
-    default: m.Lesson,
-  }))
-);
-const Quiz = lazy(() =>
-  import("@/components/shared/learning/Quiz").then((m) => ({
-    default: m.Quiz,
-  }))
-);
+const Auth = lazy(() => import("@/components/shared/learning/Auth"));
+const Lesson = lazy(() => import("@/components/shared/learning/Lesson"));
+const Quiz = lazy(() => import("@/components/shared/learning/Quiz"));
 
 function DashboardSkeleton() {
   return (

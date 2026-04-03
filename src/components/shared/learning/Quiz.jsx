@@ -328,3 +328,5 @@ export function Quiz({ mod, onBack, onComplete }) {
 		</div>
 	);
 }
+
+export default Quiz;

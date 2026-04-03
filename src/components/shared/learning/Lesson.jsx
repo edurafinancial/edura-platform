@@ -216,3 +216,5 @@ export function Lesson({ mod, onBack, onQuiz }) {
 		</div>
 	);
 }
+
+export default Lesson;

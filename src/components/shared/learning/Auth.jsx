@@ -54,3 +54,5 @@ export function Auth({ onLogin }) {
 		/>
 	);
 }
+
+export default Auth;
