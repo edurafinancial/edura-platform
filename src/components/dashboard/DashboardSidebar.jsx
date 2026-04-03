@@ -8,6 +8,7 @@ import {
   Users,
 } from "lucide-react";
 
+import eduraFinancialLogo from "@/assets/EduraFinancialLogo.webp";
 import { Button } from "@/components/ui/button";
 import {
   Sidebar,
@@ -34,29 +35,23 @@ export default function DashboardSidebar({ navLinks, footerLinks }) {
     <Sidebar className="text-on-surface" collapsible="offcanvas">
       <SidebarHeader className="bg-surface-container-low px-3 pb-3 pt-5">
         <div className="mb-4 flex items-center space-x-3 px-2">
-          <div className="bg-primary flex h-9 w-9 items-center justify-center rounded-lg text-white font-black">
-            E
-          </div>
-          <div>
-            <h1 className="font-headline text-on-surface text-lg font-black leading-tight">
-              Edura Admin
-            </h1>
-            <p className="text-on-surface-variant text-[10px] uppercase tracking-widest">
-              Financial Panel
-            </p>
-          </div>
+          <img
+            src={eduraFinancialLogo}
+            alt="Edura Financial"
+            className=" w-full rounded-md object-contain"
+          />
         </div>
         {/* <SidebarSeparator className="bg-outline-variant/60 mx-2" /> */}
       </SidebarHeader>
 
-      <SidebarContent className="bg-surface-container-low px-3">
+      <SidebarContent className="bg-surface-container-low px-3 ">
         <SidebarMenu>
           {navLinks.map((item) => (
-            <SidebarMenuItem key={item.label}>
+            <SidebarMenuItem key={item.label} className="py-0.5">
               <SidebarMenuButton
                 asChild
                 isActive={item.active}
-                className="group data-[active=true]:bg-surface-container-lowest data-[active=true]:text-primary data-[active=true]:font-semibold hover:bg-surface-container-high text-on-surface h-10 rounded-xl px-3"
+                className="group data-[active=true]:bg-surface-container-lowest data-[active=true]:text-primary data-[active=true]:font-semibold hover:bg-surface-container-high text-on-surface h-10  rounded-sm px-3"
               >
                 <a href="#">
                   {iconMap[item.icon]
