@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
 
+import { motion } from "framer-motion";
+
 import { MODULES, TRACKS } from "../content";
 import { Auth } from "../components/shared/learning/Auth";
 import { Lesson } from "../components/shared/learning/Lesson";
@@ -12,6 +14,29 @@ import DashboardHeaderSection from "@/components/dashboard/DashboardHeaderSectio
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import DashboardStatsSection from "@/components/dashboard/DashboardStatsSection";
 import DashboardTrackSection from "@/components/dashboard/DashboardTrackSection";
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut",
+    },
+  },
+};
+
+const trackVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      staggerDelay: 0.1,
+    },
+  },
+};
 
 const navLinks = [
   { label: "Dashboard", icon: "dashboard", active: true },
@@ -131,27 +156,44 @@ export default function DashboardPage() {
         localStorage.removeItem("edura-user");
       }}
     >
-      <DashboardHeaderSection userEmail={user.email} />
-      <DashboardStatsSection
-        doneCount={doneIds.length}
-        totalModules={totalModules}
-        avgScore={avgScore}
-        progressPct={progressPct}
-      />
+      <motion.div
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div variants={sectionVariants}>
+          <DashboardHeaderSection userEmail={user.email} />
+        </motion.div>
 
-      {TRACKS.map((track) => {
-        const mods = modulesByTrack[track.id] ?? [];
-        return (
-          <DashboardTrackSection
-            key={track.id}
-            track={track}
-            modules={mods}
-            progress={progress}
-            firstAvailableId={firstAvailableId}
-            onSelect={handleSelect}
+        <motion.div variants={sectionVariants}>
+          <DashboardStatsSection
+            doneCount={doneIds.length}
+            totalModules={totalModules}
+            avgScore={avgScore}
+            progressPct={progressPct}
           />
-        );
-      })}
+        </motion.div>
+
+        {TRACKS.map((track) => {
+          const mods = modulesByTrack[track.id] ?? [];
+          return (
+            <motion.section
+              key={track.id}
+              variants={sectionVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <DashboardTrackSection
+                track={track}
+                modules={mods}
+                progress={progress}
+                firstAvailableId={firstAvailableId}
+                onSelect={handleSelect}
+              />
+            </motion.section>
+          );
+        })}
+      </motion.div>
 
       <DashboardFooter />
       <DashboardBackgroundDecor />

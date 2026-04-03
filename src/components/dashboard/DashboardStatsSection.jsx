@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 import { Card, CardContent } from "@/components/ui/card";
 
 function StatCard({ label, children }) {
@@ -23,9 +25,14 @@ export default function DashboardStatsSection({
     <section className="mb-16 grid grid-cols-1 gap-6 md:grid-cols-3">
       <StatCard label="Modules Completed">
         <div className="flex items-baseline gap-1">
-          <span className="font-ui-mono text-secondary text-4xl font-bold">
+          <motion.span
+            className="font-ui-mono text-secondary text-4xl font-bold"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+          >
             {doneCount}
-          </span>
+          </motion.span>
           <span className="font-ui-mono text-on-surface-variant text-lg">
             /{totalModules}
           </span>
@@ -33,9 +40,14 @@ export default function DashboardStatsSection({
       </StatCard>
       <StatCard label="Avg Quiz Score">
         <div className="flex items-baseline gap-1">
-          <span className="font-ui-mono text-secondary text-4xl font-bold">
+          <motion.span
+            className="font-ui-mono text-secondary text-4xl font-bold"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
+          >
             {avgScore}
-          </span>
+          </motion.span>
         </div>
       </StatCard>
       <Card className="bg-surface-container-low border-surface-container-high rounded-xl border">
@@ -49,9 +61,11 @@ export default function DashboardStatsSection({
             </span>
           </div>
           <div className="bg-surface-container-high h-2.5 w-full overflow-hidden rounded-full">
-            <div
-              className="bg-primary h-full rounded-full transition-all duration-500"
-              style={{ width: `${progressPct}%` }}
+            <motion.div
+              className="bg-primary h-full rounded-full"
+              initial={{ width: 0 }}
+              animate={{ width: `${progressPct}%` }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
             />
           </div>
         </CardContent>
