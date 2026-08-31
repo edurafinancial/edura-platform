@@ -1,0 +1,27 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+dist-ssr
+.vite
+
+# Environment
+.env
+.env.*
+!.env.example
+*.local
+
+# Editor / OS
+.DS_Store
+*.swp
+.idea
+
+# Logs
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# NOTE: "Edura Content Files/" is intentionally TRACKED. Those Word documents
+# are the source of truth for all curriculum content, and scripts/ingestContent.js
+# regenerates src/data/ from them. Do not add them here.
