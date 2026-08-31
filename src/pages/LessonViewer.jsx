@@ -11,6 +11,7 @@ import LessonSkeleton from "@/components/lesson/LessonSkeleton"
 import PagePlaceholder from "@/components/shared/PagePlaceholder"
 import useKeyboardNav from "@/hooks/useKeyboardNav"
 import { getCurriculumModule } from "@/data/curriculumModules"
+import { useProgress } from "@/state/ProgressProvider"
 import { loadLesson } from "@/data/lessons"
 import { hasQuiz } from "@/data/quizzes"
 
@@ -24,6 +25,7 @@ const slideVariants = {
 export default function LessonViewer() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const { recordSlideView } = useProgress()
 
   const [lesson, setLesson] = useState(null)
   const [status, setStatus] = useState("loading")
@@ -58,6 +60,12 @@ export default function LessonViewer() {
       cancelled = true
     }
   }, [id])
+
+  // Viewing a slide is what marks a module as started / in progress.
+  useEffect(() => {
+    if (!lesson) return
+    recordSlideView(id, index, lesson.slides.length)
+  }, [id, index, lesson, recordSlideView])
 
   const total = lesson?.slides.length ?? 0
   const isFirst = index === 0

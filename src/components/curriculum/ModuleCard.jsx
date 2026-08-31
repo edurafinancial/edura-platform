@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
-import { ArrowRight, BookOpen, ClipboardCheck, Lock } from "lucide-react"
+import { ArrowRight, BookOpen, ClipboardCheck } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
@@ -13,8 +13,6 @@ const TRACK_BADGE_STYLES = {
 }
 
 export default function ModuleCard({ module, index = 0 }) {
-  const locked = module.status === "coming-soon"
-
   return (
     <motion.div
       layout
@@ -28,8 +26,8 @@ export default function ModuleCard({ module, index = 0 }) {
     >
       <Card
         className={cn(
-          "flex h-full flex-col border-border/70 shadow-sm transition-shadow",
-          locked ? "opacity-75" : "hover:shadow-md"
+          "flex h-full flex-col border-border/70 shadow-sm",
+          "transition-shadow hover:shadow-md"
         )}
       >
         <CardHeader className="space-y-3 pb-3">
@@ -71,19 +69,12 @@ export default function ModuleCard({ module, index = 0 }) {
         </CardContent>
 
         <CardFooter className="pt-0">
-          {locked ? (
-            <Button disabled variant="outline" className="w-full gap-1.5">
-              <Lock className="h-4 w-4" />
-              Coming Soon
-            </Button>
-          ) : (
-            <Button asChild className="w-full gap-1.5 bg-teal hover:bg-teal-600">
-              <Link to={`/lesson/${module.id}`}>
-                View Module
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-          )}
+          <Button asChild className="w-full gap-1.5 bg-teal hover:bg-teal-600">
+            <Link to={`/lesson/${module.id}`}>
+              View Module
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
         </CardFooter>
       </Card>
     </motion.div>

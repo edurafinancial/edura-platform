@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
-import { ArrowRight, Check, Clock, Lock } from "lucide-react"
+import { ArrowRight, Check, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import StatusBadge from "@/components/dashboard/StatusBadge"
@@ -11,7 +11,6 @@ const NODE_STYLES = {
   completed: "border-teal bg-teal text-white",
   "in-progress": "border-gold bg-gold text-navy",
   start: "border-teal bg-white text-teal",
-  "coming-soon": "border-border bg-muted text-muted-foreground",
 }
 
 function TimelineNode({ status, order }) {
@@ -25,8 +24,6 @@ function TimelineNode({ status, order }) {
     >
       {status === "completed" ? (
         <Check className="h-4 w-4" />
-      ) : status === "coming-soon" ? (
-        <Lock className="h-3.5 w-3.5" />
       ) : (
         <span className="text-stat">{order}</span>
       )}
@@ -35,8 +32,6 @@ function TimelineNode({ status, order }) {
 }
 
 function ModuleRow({ module, isLast, index }) {
-  const locked = module.status === "coming-soon"
-
   return (
     <motion.li
       initial={{ opacity: 0, y: 12 }}
@@ -56,8 +51,8 @@ function ModuleRow({ module, isLast, index }) {
 
       <div
         className={cn(
-          "flex-1 rounded-xl border border-border/70 bg-card p-4 shadow-sm transition-shadow",
-          locked ? "opacity-70" : "hover:shadow-md"
+          "flex-1 rounded-xl border border-border/70 bg-card p-4 shadow-sm",
+          "transition-shadow hover:shadow-md"
         )}
       >
         <div className="flex flex-wrap items-start justify-between gap-2">
@@ -95,28 +90,21 @@ function ModuleRow({ module, isLast, index }) {
             ) : null}
           </span>
 
-          {locked ? (
-            <Button size="sm" variant="ghost" disabled className="gap-1.5">
-              <Lock className="h-3.5 w-3.5" />
-              Locked
-            </Button>
-          ) : (
-            <Button
-              asChild
-              size="sm"
-              variant={module.status === "completed" ? "outline" : "default"}
-              className="gap-1.5"
-            >
-              <Link to={`/lesson/${module.id}`}>
-                {module.status === "completed"
-                  ? "Review"
-                  : module.status === "in-progress"
-                    ? "Continue"
-                    : "Start"}
-                <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
-            </Button>
-          )}
+          <Button
+            asChild
+            size="sm"
+            variant={module.status === "completed" ? "outline" : "default"}
+            className="gap-1.5"
+          >
+            <Link to={`/lesson/${module.id}`}>
+              {module.status === "completed"
+                ? "Review"
+                : module.status === "in-progress"
+                  ? "Continue"
+                  : "Start"}
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          </Button>
         </div>
       </div>
     </motion.li>
