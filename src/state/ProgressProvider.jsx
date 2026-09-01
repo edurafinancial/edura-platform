@@ -10,7 +10,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 
 const STORAGE_KEY = "edura.progress.v1"
 
-const EMPTY_STATE = { modules: {}, activeDays: [] }
+const EMPTY_STATE = { modules: {}, activeDays: [], exam: null }
 
 const ProgressContext = createContext(null)
 
@@ -24,6 +24,7 @@ function readStored() {
     return {
       modules: parsed.modules ?? {},
       activeDays: Array.isArray(parsed.activeDays) ? parsed.activeDays : [],
+      exam: parsed.exam ?? null,
     }
   } catch {
     // Private browsing, cleared storage, or corrupt JSON — start fresh.
@@ -114,19 +115,42 @@ export function ProgressProvider({ children }) {
     [updateModule]
   )
 
+  /** Records one exam attempt, keeping the best score achieved. */
+  const recordExamAttempt = useCallback((score, passed) => {
+    setState((prev) => {
+      const previous = prev.exam ?? { attempts: 0, bestScore: 0, passed: false }
+      const day = today()
+      return {
+        ...prev,
+        exam: {
+          attempts: previous.attempts + 1,
+          bestScore: Math.max(previous.bestScore, score),
+          lastScore: score,
+          passed: previous.passed || passed,
+          updatedAt: new Date().toISOString(),
+        },
+        activeDays: prev.activeDays.includes(day)
+          ? prev.activeDays
+          : [...prev.activeDays, day],
+      }
+    })
+  }, [])
+
   const resetProgress = useCallback(() => setState(EMPTY_STATE), [])
 
   const value = useMemo(
     () => ({
       modules: state.modules,
+      exam: state.exam,
       dayStreak: computeStreak(state.activeDays),
-      hasProgress: Object.keys(state.modules).length > 0,
+      hasProgress: Object.keys(state.modules).length > 0 || Boolean(state.exam),
       recordSlideView,
       recordQuizScore,
       completeModule,
+      recordExamAttempt,
       resetProgress,
     }),
-    [state, recordSlideView, recordQuizScore, completeModule, resetProgress]
+    [state, recordSlideView, recordQuizScore, completeModule, recordExamAttempt, resetProgress]
   )
 
   return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>

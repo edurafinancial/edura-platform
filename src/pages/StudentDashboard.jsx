@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Flame, GraduationCap, Target, TrendingUp } from "lucide-react";
 import StatCard, { StatCardSkeleton } from "@/components/dashboard/StatCard";
 import TrackTimeline from "@/components/dashboard/TrackTimeline";
+import CertificationCard from "@/components/certification/CertificationCard";
 import { Separator } from "@/components/ui/separator";
 import useHydrated from "@/hooks/useHydrated";
 import { STUDENT } from "@/data/student";
@@ -85,6 +86,10 @@ export default function StudentDashboard() {
           <TrackTimeline key={track.id} track={track} />
         ))}
       </div>
+
+      <section aria-label="Certification">
+        <CertificationCard />
+      </section>
     </div>
   );
 }

@@ -269,11 +269,114 @@ function findDescription(file, number) {
   return null
 }
 
+/* ------------------------------------------------------------------ exam --- */
+
+const EXAM_FILE = "Edura_Certification_Exam.docx"
+// Exam questions carry a "[Module N]" tag that module quizzes don't have.
+const RE_EXAM_QUESTION = /^QUESTION\s+(\d+)\s*(?:\[([^\]]+)\])?\s*$/i
+const RE_PARAM = /^([A-Za-z ]+):\s*(.+)$/
+
+/** Parses the standalone certification exam. */
+function parseExam() {
+  const paragraphs = paragraphsOf(EXAM_FILE)
+  const questions = []
+  const params = {}
+
+  let question = null
+  const push = () => {
+    if (question && question.text && question.options.length) questions.push(question)
+    question = null
+  }
+
+  for (const line of paragraphs) {
+    const questionMatch = line.match(RE_EXAM_QUESTION)
+    if (questionMatch) {
+      push()
+      question = {
+        number: Number(questionMatch[1]),
+        sourceModule: questionMatch[2] ? questionMatch[2].trim() : null,
+        text: null,
+        options: [],
+        correctOptionId: null,
+        explanation: null,
+      }
+      continue
+    }
+
+    if (!question) {
+      // Header block: "Total Questions: 40", "Passing Score: 75% ..."
+      const paramMatch = line.match(RE_PARAM)
+      if (paramMatch) params[paramMatch[1].trim()] = paramMatch[2].trim()
+      continue
+    }
+
+    const optionMatch = line.match(RE_OPTION)
+    if (optionMatch) {
+      let text = optionMatch[2].trim()
+      const isCorrect = /✓|✔/.test(text) || /\bCORRECT\s*$/i.test(text)
+      if (isCorrect) text = text.replace(/\s*(?:✓|✔)?\s*CORRECT\s*$/i, "").trim()
+      const id = optionMatch[1].toLowerCase()
+      question.options.push({ id, text })
+      if (isCorrect) question.correctOptionId = id
+      continue
+    }
+
+    const explanationMatch = line.match(RE_EXPLANATION)
+    if (explanationMatch) {
+      question.explanation = explanationMatch[1].trim()
+      continue
+    }
+
+    if (isNoise(line) || line === "QUESTIONS") continue
+    if (!question.text) question.text = line
+  }
+
+  push()
+
+  // "75% (30 out of 40 correct)" -> 75
+  const passingScore = Number((params["Passing Score"] || "").match(/(\d+)\s*%/)?.[1] ?? 75)
+
+  return { questions, passingScore, params }
+}
+
+function writeExam(exam) {
+  const j = (v) => JSON.stringify(v, null, 2)
+  const dir = path.join(DATA_DIR, "exam")
+  fs.mkdirSync(dir, { recursive: true })
+
+  const questions = exam.questions.map((q, i) => ({
+    id: `e${i + 1}`,
+    text: q.text,
+    sourceModule: q.sourceModule,
+    options: q.options,
+    correctOptionId: q.correctOptionId,
+    explanation: q.explanation || "",
+  }))
+
+  const file = [
+    banner(
+      "Certification exam question bank. Loaded on demand — it never ships in\n * the main bundle."
+    ),
+    "",
+    `export default ${j({
+      id: "certification-exam",
+      title: "Edura Financial Literacy Certification",
+      passingScore: exam.passingScore,
+      totalQuestions: questions.length,
+      questions,
+    })}`,
+    "",
+  ].join("\n")
+
+  fs.writeFileSync(path.join(dir, "certificationExam.js"), file)
+  return questions
+}
+
 /* ------------------------------------------------------------------ main --- */
 
 const SKIP = new Set([
   MASTER,
-  "Edura_Certification_Exam.docx",
+  EXAM_FILE,
   "Original lesson 6.docx",
   "Original lesson 7.docx",
 ])
@@ -329,7 +432,11 @@ function main() {
     })
 
   writeOutputs(modules)
-  report(modules)
+
+  const exam = parseExam()
+  const examQuestions = writeExam(exam)
+
+  report(modules, exam, examQuestions)
 }
 
 /* -------------------------------------------------------------- emitters --- */
@@ -442,7 +549,7 @@ function writeOutputs(modules) {
 
 /* ---------------------------------------------------------------- report --- */
 
-function report(modules) {
+function report(modules, exam, examQuestions) {
   const pad = (s, n) => String(s).padEnd(n)
   console.log("\nIngested modules\n")
   console.log(
@@ -481,6 +588,18 @@ function report(modules) {
   console.log(
     `\n  ${modules.length} modules · ${lessonTotal} lessons · ${questionTotal} questions`
   )
+
+  if (exam) {
+    console.log(
+      `  certification exam: ${examQuestions.length} questions · pass mark ${exam.passingScore}%`
+    )
+    examQuestions.forEach((q, i) => {
+      if (!q.correctOptionId) problems.push(`exam question ${i + 1} has NO correct answer`)
+      if (q.options.length !== 4) problems.push(`exam question ${i + 1} has ${q.options.length} options`)
+      if (!q.explanation) problems.push(`exam question ${i + 1} has no explanation`)
+      if (!q.text) problems.push(`exam question ${i + 1} has no text`)
+    })
+  }
 
   if (problems.length) {
     console.log(`\n  ${problems.length} INTEGRITY PROBLEM(S):`)

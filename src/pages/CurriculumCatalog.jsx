@@ -2,6 +2,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import ModuleCard from "@/components/curriculum/ModuleCard"
+import CertificationCard from "@/components/certification/CertificationCard"
 import { useModules, useTrackFilters } from "@/hooks/useCurriculum"
 
 export default function CurriculumCatalog() {
@@ -54,6 +55,10 @@ export default function CurriculumCatalog() {
             />
           ))}
         </div>
+      </section>
+
+      <section aria-label="Certification">
+        <CertificationCard />
       </section>
     </div>
   )

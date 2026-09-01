@@ -102,6 +102,32 @@ export function useTrackFilters() {
   )
 }
 
+/**
+ * Certification eligibility.
+ *
+ * The exam unlocks only when every module in the registry is completed. The
+ * source document says "all 8 modules", but that predates Module 9 — gating on
+ * the registry keeps this correct as modules are added.
+ */
+export function useCertification() {
+  const modules = useModules()
+  const { exam } = useProgress()
+
+  return useMemo(() => {
+    const remaining = modules.filter((m) => m.status !== "completed")
+    return {
+      unlocked: remaining.length === 0,
+      completedCount: modules.length - remaining.length,
+      totalCount: modules.length,
+      remaining,
+      attempts: exam?.attempts ?? 0,
+      bestScore: exam?.bestScore ?? null,
+      lastScore: exam?.lastScore ?? null,
+      passed: Boolean(exam?.passed),
+    }
+  }, [modules, exam])
+}
+
 /** Headline dashboard numbers, all derived from live progress. */
 export function useDashboardStats() {
   const modules = useModules()
