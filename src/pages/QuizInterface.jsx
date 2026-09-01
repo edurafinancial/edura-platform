@@ -9,9 +9,11 @@ import QuizResults from "@/components/quiz/QuizResults"
 import QuizSkeleton from "@/components/quiz/QuizSkeleton"
 import PagePlaceholder from "@/components/shared/PagePlaceholder"
 import { loadQuiz, buildQuizRun } from "@/data/quizzes"
+import { useProgress } from "@/state/ProgressProvider"
 
 export default function QuizInterface() {
   const { id } = useParams()
+  const { recordQuizScore } = useProgress()
 
   const [quiz, setQuiz] = useState(null)
   const [run, setRun] = useState(null)
@@ -79,13 +81,16 @@ export default function QuizInterface() {
 
   const handleNext = useCallback(() => {
     if (index + 1 >= total) {
+      // Persist the score the moment the attempt finishes.
+      const correct = results.filter((r) => r.isCorrect).length
+      recordQuizScore(id, total ? Math.round((correct / total) * 100) : 0)
       setIsComplete(true)
       return
     }
     setIndex((i) => i + 1)
     setSelectedId(null)
     setIsAnswered(false)
-  }, [index, total])
+  }, [index, total, results, id, recordQuizScore])
 
   const handleRetry = useCallback(() => {
     // A fresh run reshuffles both questions and options.

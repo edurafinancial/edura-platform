@@ -1,4 +1,4 @@
-import { CheckCircle2, Circle, Loader2, Lock } from "lucide-react"
+import { CheckCircle2, Circle, Loader2 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 
@@ -17,11 +17,6 @@ export const STATUS_CONFIG = {
     label: "Start",
     icon: Circle,
     className: "border-teal bg-transparent text-teal hover:bg-teal-50",
-  },
-  "coming-soon": {
-    label: "Coming Soon",
-    icon: Lock,
-    className: "border-transparent bg-muted text-muted-foreground",
   },
 }
 

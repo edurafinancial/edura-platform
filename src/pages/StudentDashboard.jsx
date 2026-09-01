@@ -4,11 +4,13 @@ import StatCard, { StatCardSkeleton } from "@/components/dashboard/StatCard";
 import TrackTimeline from "@/components/dashboard/TrackTimeline";
 import { Separator } from "@/components/ui/separator";
 import useHydrated from "@/hooks/useHydrated";
-import { DASHBOARD_STATS, STUDENT, TRACKS } from "@/data/mockDashboardData";
+import { STUDENT } from "@/data/student";
+import { useDashboardStats, useTracks } from "@/hooks/useCurriculum";
 
 export default function StudentDashboard() {
   const hydrated = useHydrated();
-  const stats = DASHBOARD_STATS;
+  const stats = useDashboardStats();
+  const tracks = useTracks();
 
   return (
     <div className="space-y-8">
@@ -79,7 +81,7 @@ export default function StudentDashboard() {
       <Separator />
 
       <div className="space-y-10">
-        {TRACKS.map((track) => (
+        {tracks.map((track) => (
           <TrackTimeline key={track.id} track={track} />
         ))}
       </div>

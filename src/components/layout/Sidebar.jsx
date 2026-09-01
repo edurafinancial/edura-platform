@@ -8,7 +8,7 @@ import {
   Settings,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { STUDENT } from "@/data/mockDashboardData"
+import { STUDENT } from "@/data/student"
 
 export const NAV_ITEMS = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard, end: true },

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { cn } from "@/lib/utils"
+import { useProgress } from "@/state/ProgressProvider"
 
 const CELEBRATION_THRESHOLD = 80
 
@@ -38,6 +39,7 @@ function fireConfetti() {
 
 export default function QuizResults({ moduleId, results, onRetry }) {
   const navigate = useNavigate()
+  const { completeModule } = useProgress()
   const hasFired = useRef(false)
 
   const correctCount = results.filter((r) => r.isCorrect).length
@@ -58,8 +60,7 @@ export default function QuizResults({ moduleId, results, onRetry }) {
   }, [passed])
 
   function handleCompleteModule() {
-    // Progress persistence lands here once there's a backend; for now the
-    // completion action returns the student to their dashboard.
+    completeModule(moduleId)
     navigate("/")
   }
 

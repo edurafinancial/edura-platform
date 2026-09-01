@@ -2,11 +2,14 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import ModuleCard from "@/components/curriculum/ModuleCard"
-import { TRACK_FILTERS, getModulesForTrack } from "@/data/mockCurriculum"
+import { useModules, useTrackFilters } from "@/hooks/useCurriculum"
 
 export default function CurriculumCatalog() {
   const [track, setTrack] = useState("all")
-  const modules = getModulesForTrack(track)
+  const allModules = useModules()
+  const filters = useTrackFilters()
+  const modules =
+    track === "all" ? allModules : allModules.filter((m) => m.trackId === track)
 
   return (
     <div className="space-y-8">
@@ -26,7 +29,7 @@ export default function CurriculumCatalog() {
 
       <Tabs value={track} onValueChange={setTrack}>
         <TabsList className="bg-muted">
-          {TRACK_FILTERS.map((filter) => (
+          {filters.map((filter) => (
             <TabsTrigger
               key={filter.id}
               value={filter.id}
