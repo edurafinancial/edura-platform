@@ -7,6 +7,7 @@ import StudentDashboard from "@/pages/StudentDashboard"
 import LessonViewer from "@/pages/LessonViewer"
 import QuizInterface from "@/pages/QuizInterface"
 import CurriculumCatalog from "@/pages/CurriculumCatalog"
+import CertificationExam from "@/pages/CertificationExam"
 import Settings from "@/pages/Settings"
 import Support from "@/pages/Support"
 import NotFound from "@/pages/NotFound"
@@ -43,6 +44,7 @@ export default function App() {
           }
         />
         <Route path="curriculum" element={<CurriculumCatalog />} />
+        <Route path="exam" element={<CertificationExam />} />
         <Route path="settings" element={<Settings />} />
         <Route path="support" element={<Support />} />
         <Route path="*" element={<NotFound />} />
