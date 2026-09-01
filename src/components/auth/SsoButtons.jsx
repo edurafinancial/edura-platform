@@ -1,5 +1,7 @@
-import { Building2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Building2, Github, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/state/AuthProvider";
+import { useState } from "react";
 
 /** Google's mark, inlined so it renders without an external request. */
 function GoogleIcon() {
@@ -22,20 +24,59 @@ function GoogleIcon() {
         d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1a11 11 0 0 0-9.82 6.05l3.66 2.84c.87-2.6 3.3-4.51 6.16-4.51Z"
       />
     </svg>
-  )
+  );
 }
 
 export default function SsoButtons() {
+  const { signInWithGitHub, isConfigured, error } = useAuth();
+  const [pending, setPending] = useState(false);
+
+  async function handleGitHub() {
+    setPending(true);
+    // On success the browser leaves for GitHub, so `pending` stays true.
+    await signInWithGitHub();
+    setPending(false);
+  }
+
   return (
-    <div className="grid gap-3 sm:grid-cols-2">
-      <Button type="button" variant="outline" className="gap-2">
-        <GoogleIcon />
-        Google
+    <div className="space-y-3">
+      <Button
+        type="button"
+        onClick={handleGitHub}
+        disabled={!isConfigured || pending}
+        className="w-full gap-2 bg-navy text-white hover:bg-navy-700"
+        size="lg"
+      >
+        {pending ? (
+          <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+        ) : (
+          <Github className="h-4 w-4" aria-hidden="true" />
+        )}
+        Sign in with GitHub
       </Button>
-      <Button type="button" variant="outline" className="gap-2">
-        <Building2 className="h-4 w-4" aria-hidden="true" />
-        University Login
-      </Button>
+
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Button type="button" variant="outline" className="gap-2" disabled>
+          <GoogleIcon />
+          Google
+        </Button>
+        <Button type="button" variant="outline" className="gap-2" disabled>
+          <Building2 className="h-4 w-4" aria-hidden="true" />
+          University Login
+        </Button>
+      </div>
+
+      {error ? (
+        <p role="alert" className="text-sm text-red-600">
+          {error}
+        </p>
+      ) : null}
+
+      {!isConfigured ? (
+        <p className="text-xs text-muted-foreground">
+          Sign-in is unavailable until Supabase environment variables are set.
+        </p>
+      ) : null}
     </div>
-  )
+  );
 }
