@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom"
 import {
+  Award,
   BarChart3,
   BookOpen,
   GraduationCap,
@@ -13,6 +14,7 @@ import { STUDENT } from "@/data/student"
 export const NAV_ITEMS = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard, end: true },
   { to: "/curriculum", label: "Curriculum", icon: BookOpen },
+  { to: "/exam", label: "Certification", icon: Award },
   { to: "/teacher", label: "Analytics", icon: BarChart3 },
   { to: "/settings", label: "Settings", icon: Settings },
   { to: "/support", label: "Support", icon: LifeBuoy },
