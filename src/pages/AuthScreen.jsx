@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
 import { ArrowLeft, GraduationCap, LineChart, ShieldCheck, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import RoleSelector from "@/components/auth/RoleSelector"
 import SsoButtons from "@/components/auth/SsoButtons"
+import { useAuth } from "@/state/AuthProvider"
 
 const MARKETING_URL = "https://edurafinancial.com"
 
@@ -78,10 +79,17 @@ function BrandPanel() {
 
 export default function AuthScreen() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const { isAuthenticated, status } = useAuth()
   const [mode, setMode] = useState("login")
   const [role, setRole] = useState("student")
 
   const isSignUp = mode === "signup"
+
+  // Already signed in — go straight to wherever they were headed.
+  if (status !== "loading" && isAuthenticated) {
+    return <Navigate to={location.state?.from || "/"} replace />
+  }
 
   function handleSubmit(event) {
     event.preventDefault()

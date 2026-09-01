@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom";
 import {
   Award,
   BarChart3,
@@ -6,10 +6,12 @@ import {
   GraduationCap,
   LayoutDashboard,
   LifeBuoy,
+  LogOut,
   Settings,
-} from "lucide-react"
-import { cn } from "@/lib/utils"
-import { STUDENT } from "@/data/student"
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { STUDENT } from "@/data/student";
+import { useAuth } from "@/state/AuthProvider";
 
 export const NAV_ITEMS = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard, end: true },
@@ -18,10 +20,10 @@ export const NAV_ITEMS = [
   { to: "/teacher", label: "Analytics", icon: BarChart3 },
   { to: "/settings", label: "Settings", icon: Settings },
   { to: "/support", label: "Support", icon: LifeBuoy },
-]
+];
 
 function NavItem({ item, onNavigate }) {
-  const Icon = item.icon
+  const Icon = item.icon;
   return (
     <NavLink
       to={item.to}
@@ -33,7 +35,7 @@ function NavItem({ item, onNavigate }) {
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 focus-visible:ring-offset-navy",
           isActive
             ? "bg-white/10 text-white"
-            : "text-white/65 hover:bg-white/5 hover:text-white"
+            : "text-white/65 hover:bg-white/5 hover:text-white",
         )
       }
     >
@@ -44,26 +46,78 @@ function NavItem({ item, onNavigate }) {
             aria-hidden="true"
             className={cn(
               "absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-r-full bg-teal transition-opacity",
-              isActive ? "opacity-100" : "opacity-0"
+              isActive ? "opacity-100" : "opacity-0",
             )}
           />
           <Icon
             className={cn(
               "h-[18px] w-[18px] shrink-0 transition-colors",
-              isActive ? "text-teal" : "text-white/55 group-hover:text-white/80"
+              isActive
+                ? "text-teal"
+                : "text-white/55 group-hover:text-white/80",
             )}
           />
           {item.label}
         </>
       )}
     </NavLink>
-  )
+  );
 }
 
 /**
  * Sidebar body — shared by the desktop rail and the mobile drawer so the
  * two can never drift apart.
  */
+function SidebarFooter() {
+  const { user, isAuthenticated, signOut } = useAuth();
+
+  // Prefer the GitHub identity once signed in; fall back to the placeholder.
+  const name =
+    user?.user_metadata?.full_name ||
+    user?.user_metadata?.user_name ||
+    STUDENT.fullName;
+  const detail = user?.email || STUDENT.school;
+  const avatar = user?.user_metadata?.avatar_url;
+  const initials = name
+    .split(" ")
+    .map((part) => part[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+
+  return (
+    <div className="mt-auto border-t border-white/10 p-4">
+      <div className="flex items-center gap-3">
+        {avatar ? (
+          <img
+            src={avatar}
+            alt=""
+            className="h-9 w-9 shrink-0 rounded-full object-cover"
+          />
+        ) : (
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs font-semibold text-white">
+            {initials}
+          </span>
+        )}
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-sm font-medium text-white">{name}</p>
+          <p className="truncate text-xs text-white/50">{detail}</p>
+        </div>
+        {isAuthenticated ? (
+          <button
+            type="button"
+            onClick={signOut}
+            aria-label="Sign out"
+            className="shrink-0 rounded-md p-1.5 text-white/50 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
+          >
+            <LogOut className="h-4 w-4" aria-hidden="true" />
+          </button>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
 export function SidebarContent({ onNavigate }) {
   return (
     <div className="flex h-full flex-col bg-navy">
@@ -83,21 +137,9 @@ export function SidebarContent({ onNavigate }) {
         ))}
       </nav>
 
-      <div className="mt-auto border-t border-white/10 p-4">
-        <div className="flex items-center gap-3">
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs font-semibold text-white">
-            {STUDENT.initials}
-          </span>
-          <div className="min-w-0">
-            <p className="truncate text-sm font-medium text-white">
-              {STUDENT.fullName}
-            </p>
-            <p className="truncate text-xs text-white/50">{STUDENT.school}</p>
-          </div>
-        </div>
-      </div>
+      <SidebarFooter />
     </div>
-  )
+  );
 }
 
 /** Persistent desktop rail. Hidden below lg, where the drawer takes over. */
@@ -106,5 +148,5 @@ export default function Sidebar() {
     <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 lg:block">
       <SidebarContent />
     </aside>
-  )
+  );
 }
